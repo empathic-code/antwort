@@ -79,6 +79,8 @@ Generated Code:
         How old are you? 
         [__ Age __] (0-100)
 
+Generated Code:
+
     <div>
         <h2>1. Age</h2>
         <blockquote>How old are you?</blockquote>
@@ -100,7 +102,7 @@ Generated Code:
         <textarea name="comments" placeholder="Comments" rows="3" ></textarea>
     </div>
 
-Note how the rows show up visually - You actually have to put the amount of rows that you want to show. The width doesn't matter as long as you put underscores within brackets.
+Note how the rows show up visually - You actually have to put the amount of rows that you want to show. The width doesn't matter as long as you put underscores within brackets, and a placeholder in the first line. 
 
 ### Drop Down Selection Lists
     5. Country (country)
@@ -147,7 +149,8 @@ Generated Code:
         <h2>10. Programming Languages</h2>
         <blockquote>How well do you know the following languages?</blockquote>
         <table>
-            <thead><tr><th></th>
+            <thead><tr>
+                <th></th>
                 <th>No experience</th>
                 <th>Basic Knowledge</th>
                 <th>Expert</th>
@@ -166,7 +169,7 @@ Generated Code:
                     <td><input type="radio" name="c" value="2" required></td>
                 </tr>
 
-                <!-- rest of the rows ommited-->
+                <!-- rest of the rows ommited, you get the idea -->
 
             </tbody>
         </table>
