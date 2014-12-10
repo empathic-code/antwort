@@ -1,0 +1,188 @@
+
+<html>
+    <div>
+        <h2>1. Geschlecht</h2>
+            <input type="radio" name="sex" value="m" required>Männlich
+            <input type="radio" name="sex" value="w" required>Weiblich
+    </div>
+    <div>
+        <h2>2. Alter</h2>
+        <blockquote>Wie alt bist du?</blockquote>
+        <input name="age" placeholder="Dein Alter" type="number" min="0" max="100" required>
+    </div>
+    <div>
+        <h2>3. Beruf</h2>
+        <blockquote>Wie bist du aktuell beschäftigt?</blockquote>
+        <select name="jobtype" required><option selected="selected" value="">Bitte auswählen</option>
+            <option value="selbstständig">Selbstständig</option>
+            <option value="angestellt">Angestellt</option>
+            <option value="student">Student</option>
+            <option value="none">Kein Beruf</option>
+            <option value="other">Anders</option>
+        </select>
+    </div>
+    <div>
+        <h2>4. Stellen- oder Positionsbeschreibung</h2>
+        <blockquote>Wie würdest du deine derzeitige Position mit einem Wort beschreiben?</blockquote>
+        <input name="job_description" placeholder="Beschreibung oder Jobtitel" type="text"  required>
+    </div>
+    <div>
+        <h2>5. Schulbildung</h2>
+        <blockquote>Gib deinen höchsten Schulabschluss an!</blockquote>
+        <select name="education" ><option selected="selected" value="">Bitte auswählen</option>
+            <option value="hauptschule">Hauptschulabschluss</option>
+            <option value="mr">Mittlere Reife</option>
+            <option value="abi">Abitur / Fachabitur</option>
+            <option value="none">Kein Abschluss</option>
+            <option value="other">Anderer Abschluss</option>
+        </select>
+    </div>
+    <div>
+        <h2>6. Weitere Ausbildung</h2>
+        <blockquote>Gib deinen höchsten Abschluss an!</blockquote>
+        <select name="academic_degree" ><option selected="selected" value="">Bitte auswählen</option>
+            <option value="lehre">Lehre / Fachausbildung</option>
+            <option value="ba">Bachelor</option>
+            <option value="msc">Master / Diplom</option>
+            <option value="dr">Promotion</option>
+            <option value="none">Quereinsteiger / Keine Abschluss</option>
+            <option value="other">Anderer Abschluss</option>
+        </select>
+    </div>
+    <div>
+        <h2>7. Welchen Titel hast du genau erlangt?</h2>
+        <blockquote>Zum Beispiel: Dipl.-Inform. (FH), Fachinformatiker.</blockquote>
+        <input name="subject" placeholder="Fachrichtung" type="text"  required>
+    </div>
+    <div>
+        <h2>8. Wie viele Jahre Erfahrung hast du mit C# (regelmäßige, professionelle Anwendung)?</h2>
+        <input name="years_experience_csharp" placeholder="Jahre" type="number" min="0" max="100" required>
+    </div>
+    <div>
+        <h2>9. Seit wie vielen Jahren programmierst du schon überhaupt, also auch in anderen Sprachen?</h2>
+        <input name="years_experience_any" placeholder="Jahre" type="number" min="0" max="100" required>
+    </div>
+    <div>
+        <h2>10. Weitere Kenntnisse</h2>
+        <blockquote>Wie gut kennst du dich mit den folgenden Sprachen aus?</blockquote>
+        <table>
+            <thead><tr><th></th>
+                <th>Keine Erfahrung</th>
+                <th>Grundkenntnisse</th>
+                <th>Projekterfahrung</th>
+                <th>Regelmäßig</th>
+                <th>Experte</th>
+            </tr></thead>
+            <tbody>
+                <tr>
+                    <td>Java</td>
+                    <td><input type="radio" name="java" value="0" required></td>
+                    <td><input type="radio" name="java" value="1" required></td>
+                    <td><input type="radio" name="java" value="2" required></td>
+                    <td><input type="radio" name="java" value="3" required></td>
+                    <td><input type="radio" name="java" value="4" required></td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td><input type="radio" name="c" value="0" required></td>
+                    <td><input type="radio" name="c" value="1" required></td>
+                    <td><input type="radio" name="c" value="2" required></td>
+                    <td><input type="radio" name="c" value="3" required></td>
+                    <td><input type="radio" name="c" value="4" required></td>
+                </tr>
+                <tr>
+                    <td>C++</td>
+                    <td><input type="radio" name="cpp" value="0" required></td>
+                    <td><input type="radio" name="cpp" value="1" required></td>
+                    <td><input type="radio" name="cpp" value="2" required></td>
+                    <td><input type="radio" name="cpp" value="3" required></td>
+                    <td><input type="radio" name="cpp" value="4" required></td>
+                </tr>
+                <tr>
+                    <td>VB.NET</td>
+                    <td><input type="radio" name="vbnet" value="0" required></td>
+                    <td><input type="radio" name="vbnet" value="1" required></td>
+                    <td><input type="radio" name="vbnet" value="2" required></td>
+                    <td><input type="radio" name="vbnet" value="3" required></td>
+                    <td><input type="radio" name="vbnet" value="4" required></td>
+                </tr>
+                <tr>
+                    <td>JavaScript</td>
+                    <td><input type="radio" name="js" value="0" required></td>
+                    <td><input type="radio" name="js" value="1" required></td>
+                    <td><input type="radio" name="js" value="2" required></td>
+                    <td><input type="radio" name="js" value="3" required></td>
+                    <td><input type="radio" name="js" value="4" required></td>
+                </tr>
+                <tr>
+                    <td>F#</td>
+                    <td><input type="radio" name="fsharp" value="0" required></td>
+                    <td><input type="radio" name="fsharp" value="1" required></td>
+                    <td><input type="radio" name="fsharp" value="2" required></td>
+                    <td><input type="radio" name="fsharp" value="3" required></td>
+                    <td><input type="radio" name="fsharp" value="4" required></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h2>11. Welche anderen Sprachen kennst du (Grundkenntnisse oder mehr)?</h2>
+        <blockquote>Bitte gib mehrere Werte mit Kommata getrennt an!</blockquote>
+        <textarea name="other_languages" placeholder="Sprachen" rows="3" required></textarea>
+    </div>
+    <div>
+        <h2>12. Natürliche Sprachen</h2>
+        <blockquote>Was ist deine Muttersprache?</blockquote>
+        <select name="mother_tounge" required><option selected="selected" value="">Bitte auswählen</option>
+            <option value="de">Deutsch</option>
+            <option value="en">Englisch</option>
+            <option value="ru">Russisch</option>
+            <option value="pl">Polnisch</option>
+            <option value="cz">Tschechisch</option>
+            <option value="es">Spanisch</option>
+            <option value="it">Italienisch</option>
+            <option value="fr">Französisch</option>
+            <option value="other">Andere</option>
+        </select>
+    </div>
+    <div>
+        <h2>13. Folgst du dem Account @pro_cessor auf Twitter?</h2>
+            <input type="radio" name="is_twitter_follower" value="yes" required>Ja
+            <input type="radio" name="is_twitter_follower" value="no" required>Nein
+    </div>
+    <div>
+        <h2>14. Hast du schonmal einen Vortrag von mir (Johannes Hofmeister) gehört?</h2>
+            <input type="radio" name="has_heard_presentation" value="yes" required>Ja
+            <input type="radio" name="has_heard_presentation" value="no" required>Nein
+    </div>
+    <div>
+        <h2>15. Kennst du meinen Artikel über "Weasel Words" in der dotnetpro?</h2>
+            <input type="radio" name="has_read_dnp_article" value="yes" required>Ja
+            <input type="radio" name="has_read_dnp_article" value="no" required>Nein
+    </div>
+    <div>
+        <h2>16. Hast du alls Aufgaben ernsthaft beantwortet, oder wolltest du nur mal gucken?</h2>
+            <input type="radio" name="are_you_serious" value="yes" required>Ja, ich habe die Studie sorgfältig bearbeitet
+            <input type="radio" name="are_you_serious" value="no" required>Nein, ich wollte nur mal gucken und habe mich durchgeklickt.
+    </div>
+    <div>
+        <h2>17. Hast du schon einmal an dieser Studie teilgenommen?</h2>
+            <input type="radio" name="boomerang" value="yes" required>Ja. Ich wollte öfter mitmachen!
+            <input type="radio" name="boomerang" value="no" required>Nein! Dies ist mein erstes mal!
+    </div>
+    <div>
+        <h2>18. Würdest du noch einmal an einer ähnlichen Studie teilnehmen?</h2>
+            <input type="radio" name="participate_again" value="yes" required>Ja
+            <input type="radio" name="participate_again" value="maybe" required>Vielleicht
+            <input type="radio" name="participate_again" value="no" required>Nein
+    </div>
+    <div>
+        <h2>19. Was glaubst du, wurde hier untersucht?</h2>
+        <textarea name="guess_hypothesis" placeholder="Deine Hypothese" rows="5" required></textarea>
+    </div>
+    <div>
+        <h2>20. Kommentare</h2>
+        <blockquote>Hast du Kommentare, Anregungen oder Kritik, die du gerne mitteilen würdest?</blockquote>
+        <textarea name="kotzbox" placeholder="Kommentare" rows="5" ></textarea>
+    </div>
+</html>
