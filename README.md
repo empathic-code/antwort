@@ -3,6 +3,16 @@ Antwort
 Antwort is a DSL for questionnaires that I am using for my bachelor thesis.
 The word "Antwort" is German for "answer". 
 
+Usage
+-----
+
+    $ cat <antwort file.txt> | python program.py
+
+or, under windows:
+
+    X:\antwort.bat <antwortfile.txt>
+
+
 Motivation
 ----------
 The first scientific study that I conducted included a couple of questionnaires. I created those by writing the HTML Code myself. This turned out to be tedious and error prone. I wanted to create a small language format, that would allow me to create questionnaires in an easy, visual way. 
