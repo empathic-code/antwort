@@ -5,7 +5,7 @@ The word "Antwort" is German for "answer".
 
 Motivation
 ----------
-The first scientific study that I conducted included a couple of questionnaires. I created those by writing the HTML Code myself. This turned out to be tedious and error prone. I wanted to create a small language format, that would allow me to create questinnaires in an easy, visual way. 
+The first scientific study that I conducted included a couple of questionnaires. I created those by writing the HTML Code myself. This turned out to be tedious and error prone. I wanted to create a small language format, that would allow me to create questionnaires in an easy, visual way. 
 
 Since I love python and markdown, the DSL picks up some of their concepts (visually and aesthetically, that is). 
 
@@ -21,16 +21,16 @@ Antwort contains a list of questions. A Question usually looks like this:
         Please specify your current age.
         [__ Age __] (0 - 100)
 
-A Question has a Number and a title. After that there is an identifier, which names the variable for this question. The asterisk at the end tells you whether or not this question should be required.
+A question has a number and a title. After that there is an identifier, which names the variable for this question. The optional asterisk at the end tells you whether or not this question should be required.
 
 In the next line after the question you can give some more context. This explanatory sentence is optional.
 
-After that you define in what way the person should answer. In the example there is a textbox specified that has the word "Age" as a placeholder. After that there is a range defined, that converters can use for validation.
+After that you define in what way the person should answer. In the example there is a textbox specified that has the word "Age" as a placeholder. If you want the field to contain only numbers you can specify a range of values, that converters can use for validation.
 
-So far there is only a HTML generator that produces HTML 5. The code here is transformed to the following: 
+So far there is only a HTML target that produces HTML5. The code above is transformed into the following html code: 
 
     <div>
-        <h2>1. Alter</h2>
+        <h2>1. Age</h2>
         <blockquote>Please specify your current age.</blockquote>
         <input name="age" placeholder="Age" type="number" min="0" max="100" required>
     </div>
@@ -52,6 +52,8 @@ You can specify:
         [ ] Yes, send me your newsletter! (receive_newsletter)
         [ ] I would like to receive Emails about new offers by a third party! (third_party)
 
+Generated Code:
+
     <div>
         <h2>1. Would you like to receive our newsletter?</h2>
         <input type="checkbox" name="receive_newsletter" value="" >Yes, send me your newsletter!
@@ -63,6 +65,8 @@ You can specify:
     1. Are you male of female? (sex) *
         ( ) Male (m)
         ( ) Female (w)
+
+Generated Code:
 
     <div>
         <h2>1. Are you male of female?</h2>
@@ -88,6 +92,8 @@ You can specify:
         [_____________________]
         [_____________________]
 
+Generated Code:
+
     <div>
         <h2>20. Comments</h2>
         <blockquote>Do you have comments or would you like to suggest improvements to our services?</blockquote>
@@ -104,6 +110,8 @@ Note how the rows show up visually - You actually have to put the amount of rows
             United Kingdom (uk)
             France (fr)
         ]
+
+Generated Code:
 
     <div>
          <h2>5. Country</h2>
@@ -132,6 +140,8 @@ This is useful if you have many answers that are all on the same scale.
             JavaScript (js)
             F# (fsharp)
         ]
+
+Generated Code:
 
     <div>
         <h2>10. Programming Languages</h2>
