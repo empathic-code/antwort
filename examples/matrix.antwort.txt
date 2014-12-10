@@ -1,0 +1,11 @@
+10. Programming Languages (other_languages_matrix) *
+    How well do you know the following languages? 
+    { No experience (0) -- Basic Knowledge (1) -- Used Once (2) -- Regular use (3) -- Expert (4) }
+    [
+        Java (java)
+        C (c)
+        C++ (cpp)
+        VB.NET (vbnet)
+        JavaScript (js)
+        F# (fsharp)
+    ]
