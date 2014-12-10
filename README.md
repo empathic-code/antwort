@@ -174,3 +174,9 @@ Generated Code:
             </tbody>
         </table>
     </div>
+
+Todo
+----
+In order for this to be useful for other people than me, I would like to specify more targets. You could use this to create questionnaires with TKInter or XAML (Windows / CSharp). I have no idea if it is possible, but a target for https://www.soscisurvey.de/ would be of much use for many students. If you are interested in creating sosci survey questionnaires in the ANTWORT language, please let me know. Please write to:
+
+    antwort-language [at] spam . cessor . de 
