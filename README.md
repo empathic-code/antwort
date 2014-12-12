@@ -5,7 +5,7 @@ The word "Antwort" is German for "answer".
 
 Usage
 -----
-Call program.py and pass it template file that specifies the transformations.
+Call program.py and pass it a template file that specifies the transformations.
 It also needs a source file containing the script written in the ANTWORT mini-language. This file can either be passed in via STDIN or the --in argument. 
 The output is either written to the STDOU stream or written to the path that you specify with the --out argument as UTF-8.
 
@@ -177,7 +177,7 @@ Generated Code:
                     <td><input type="radio" name="c" value="2" required></td>
                 </tr>
 
-                <!-- rest of the rows ommited, you get the idea -->
+                <!-- rest of the rows omitted, you get the idea -->
 
             </tbody>
         </table>
