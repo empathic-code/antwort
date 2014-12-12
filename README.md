@@ -5,14 +5,12 @@ The word "Antwort" is German for "answer".
 
 Usage
 -----
+Call program.py and pass it template file that specifies the transformations.
+It also needs a source file containing the script written in the ANTWORT mini-language. This file can either be passed in via STDIN or the --in argument. 
+The output is either written to the STDOU stream or written to the path that you specify with the --out argument as UTF-8.
 
-    $ cat <antwort file.txt> | python program.py
-
-or, under windows:
-
-    X:\antwort.bat <antwortfile.txt>
-
-
+    $ ./program.py --template=templates/plain.template.jinja2.html < example/example.antwort.txt
+    
 Motivation
 ----------
 The first scientific study that I conducted included a couple of questionnaires. I created those by writing the HTML Code myself. This turned out to be tedious and error prone. I wanted to create a small language format, that would allow me to create questionnaires in an easy, visual way. 
