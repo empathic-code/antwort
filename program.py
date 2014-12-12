@@ -5,7 +5,7 @@ Usage:
     my_program --template=<template> [--in=INFILE] [--out=<outfile>] [--title=TITLE]
 
 Options:
-    --title=TITLE                          The title of the document
+    --title=TITLE                       The title of the document
     -i INFILE, --in=INFILE              The input file written in the ANTWORT language
     -t TEMPLATE, --template=TEMPLATE    The template file that defines the transformations
     -o OUTFILE, --out=OUTFILE           Path of the file you would like to create
