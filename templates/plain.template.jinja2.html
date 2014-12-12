@@ -1,76 +1,72 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="ANTWORT - Questionnaire">
-  <title>Questionnaire - generated with ANTWORT</title>
-</head>
-<body>
-<section>
-  <form class="form">
-  <fieldset>
-    {% for question in questions %}
-      <div>
-        <h1>{{ question.header.number }}. {{ question.header.variable.label.text.decode('utf-8') }}</h1>
-        {% if question.header.explanation %}
-          <blockquote>{{ question.header.explanation.text.decode('utf-8') }}</blockquote>
-        {% endif %}
-        {% if question.options.__str__() == 'InputFieldExpression' %}
-          {% if question.options.lines > 1 %}
-          <textarea name="{{ question.header.variable.value }}" placeholder="{{ question.options.placeholder.placeholder }}" rows="{{ question.options.lines }}" {% if question.header.required %}required{% endif %}></textarea>
-          {% else %}
-            {% if question.options.range %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="ANTWORT - Questionnaire">
+    <title>Questionnaire - generated with ANTWORT</title>
+  </head>
+  <body>
+    <section>
+      <form class="form">
+        <fieldset>
+          {% for question in questions %}
+            <div>
+              <h1>{{ question.header.number }}. {{ question.header.variable.label.text.decode('utf-8') }}</h1>
+              {% if question.header.explanation %}
+              <blockquote>{{ question.header.explanation.text.decode('utf-8') }}</blockquote>
+              {% endif %}
+              {% if question.options.__str__() == 'InputFieldExpression' %}
+              {% if question.options.lines > 1 %}
+              <textarea name="{{ question.header.variable.value }}" placeholder="{{ question.options.placeholder.placeholder }}" rows="{{ question.options.lines }}" {% if question.header.required %}required{% endif %}></textarea>
+                {% else %}
+                  {% if question.options.range %}
               <input type="number" min="{{ question.options.range.min }}" max="{{ question.options.range.max }}" name="{{ question.header.variable.value }}" placeholder="{{ question.options.placeholder.placeholder }}" {% if question.header.required %}required{% endif %}>
-            {% else %}
+                  {% else %}
               <input type="text" name="{{ question.header.variable.value }}" placeholder="{{ question.options.placeholder.placeholder }}" {% if question.header.required %}required{% endif %}>
-            {% endif %}
-          {% endif %}
-        {% elif question.options.__str__() == 'RadioListExpression' %}
-          {% for radio in question.options.radios %}        
-            <input type="radio" name="{{ question.header.variable.value }}" value="{{ radio.variable.value }}" {% if question.header.required %}required{% endif %}>{{ radio.variable.label.text.decode('utf-8') }}
-          {% endfor %}
-        {% elif question.options.__str__() == 'CheckBoxListExpression' %}
-          {% for checkbox in question.options.checkboxes %}
-            <input type="checkbox" name="{{ question.header.variable.value }}" value="" {% if question.header.required %}required{% endif %}><span class="ripple"></span><span class="check"></span> {{ checkbox.variable.label.text.decode('utf-8') }}
-          {% endfor %}
-        {% elif question.options.__str__() == 'ListExpression' %}
-          <select name="{{ question.header.variable.value }}" {% if question.header.required %}required{% endif %}>
-            <option selected="selected" value="">Bitte auswählen</option>
-            {% for element in question.options.elements %}<option value="{{ element.variable.value.name.decode('utf-8') }}">{{ element.variable.label.text.decode('utf-8') }}</option>
-            {% endfor %}
-          </select>
-        {% elif question.options.__str__() == 'MatrixExpression' %}
-          <table>
-          <thead>
-            <tr>
-              <th></th>
-              {% for step in question.options.scale.steps %}
-              <th>{{ step.label.text.decode('utf-8') }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for element in question.options.list.elements %}
-              <tr>
-                <td>
-                {{ element.variable.label.text.decode('utf-8') }}
-                </td>
-                {% for step in question.options.scale.steps %}
-                <td>
-                  <input type="radio" name="{{  element.variable.value.name.decode('utf-8') }}" value="{{ step.value }}" {% if question.header.required %}required{% endif %}>
-                </td>
+                  {% endif %}
+                {% endif %}
+              {% elif question.options.__str__() == 'RadioListExpression' %}
+                {% for radio in question.options.radios %}        
+              <input type="radio" name="{{ question.header.variable.value }}" value="{{ radio.variable.value }}" {% if question.header.required %}required{% endif %}>{{ radio.variable.label.text.decode('utf-8') }}
                 {% endfor %}
-              </tr>
-            {% endfor %}
-          </tbody>
-          </table>
-        {% else %}
-          <!-- Couldn't render {{question.options }} -->
-        {% endif %}
-      </div>
-    {% endfor %}
-  </fieldset>
-  </form>
-</section>
-</body>
+              {% elif question.options.__str__() == 'CheckBoxListExpression' %}
+                {% for checkbox in question.options.checkboxes %}
+              <input type="checkbox" name="{{ question.header.variable.value }}" value="" {% if question.header.required %}required{% endif %}><span class="ripple"></span><span class="check"></span> {{ checkbox.variable.label.text.decode('utf-8') }}
+                {% endfor %}
+              {% elif question.options.__str__() == 'ListExpression' %}
+              <select name="{{ question.header.variable.value }}" {% if question.header.required %}required{% endif %}>
+                <option selected="selected" value="">Bitte auswählen</option>
+                {% for element in question.options.elements %}<option value="{{ element.variable.value.name.decode('utf-8') }}">{{ element.variable.label.text.decode('utf-8') }}</option>
+                {% endfor %}
+              </select>
+              {% elif question.options.__str__() == 'MatrixExpression' %}
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    {% for step in question.options.scale.steps %}
+                    <th>{{ step.label.text.decode('utf-8') }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for element in question.options.list.elements %}
+                  <tr>
+                    <td>{{ element.variable.label.text.decode('utf-8') }}</td>
+                    {% for step in question.options.scale.steps %}
+                    <td><input type="radio" name="{{  element.variable.value.name.decode('utf-8') }}" value="{{ step.value }}" {% if question.header.required %}required{% endif %}></td>
+                    {% endfor %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+                <!-- Couldn't render {{question.options }} -->
+              {% endif %}
+            </div>
+          {% endfor %}
+        </fieldset>
+      </form>
+    </section>
+  </body>
 </html>
