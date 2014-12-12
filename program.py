@@ -2,7 +2,7 @@
 Antwort
 
 Usage: 
-    my_program --template=<template> [--in=INFILE] [--out=<outfile>] [--title=TITLE]
+    program.py --template=<template> [--in=INFILE] [--out=<outfile>] [--title=TITLE]
 
 Options:
     --title=TITLE                       The title of the document
