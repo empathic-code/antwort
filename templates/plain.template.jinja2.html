@@ -26,7 +26,7 @@
                   {% endif %}
                 {% endif %}
               {% elif question.options.__str__() == 'RadioListExpression' %}
-                {% for radio in question.options.radios %}        
+              {% for radio in question.options.radios %}
               <input type="radio" name="{{ question.header.variable.value }}" value="{{ radio.variable.value }}" {% if question.header.required %}required{% endif %}>{{ radio.variable.label.text.decode('utf-8') }}
                 {% endfor %}
               {% elif question.options.__str__() == 'CheckBoxListExpression' %}
