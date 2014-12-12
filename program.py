@@ -2,9 +2,10 @@
 Antwort
 
 Usage: 
-    my_program --template=<template> [--in=INFILE] [--out=<outfile>]
+    my_program --template=<template> [--in=INFILE] [--out=<outfile>] [--title=TITLE]
 
 Options:
+    --title=TITLE                          The title of the document
     -i INFILE, --in=INFILE              The input file written in the ANTWORT language
     -t TEMPLATE, --template=TEMPLATE    The template file that defines the transformations
     -o OUTFILE, --out=OUTFILE           Path of the file you would like to create
@@ -41,9 +42,9 @@ def remove_empty_lines(text):
     lines = [line for line in lines if line.strip()]
     return '\n'.join(lines)
 
-def transform(template, data):
+def transform(template, title, data):
     template = Template(template)
-    template = template.render(questions=data.questions)
+    template = template.render(title=title, questions=data.questions)
     template = remove_empty_lines(template)
     return template
 
@@ -54,9 +55,12 @@ if __name__ == '__main__':
     content = (read(infile) if infile else sys.stdin.read())
     data = parse(content)
 
+    title = arguments['--title']
+    title = (title if title else "Questionnaire - generated with ANTWORT")
+
     template = arguments['--template']
     template = read_utf(template)
-    template = transform(template, data)
+    template = transform(template, title, data)
 
     outfile = arguments['--out']
     if outfile:
