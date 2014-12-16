@@ -123,6 +123,15 @@ def test_question_head():
     assert_equal(expression.variable.value.name, 'age')
     assert_equal(expression.explanation, None)
 
+def test_question_head_with_number():
+    'Matches a question head that contains a number: 1. Hast du im Jahr 2013 schon einmal mitgemacht? (follow_up)'
+    input_file = ("1. Hast du im Jahr 2013 schon einmal mitgemacht? (follow_up)\n")
+    lexer = AntwortLexer(input_file)
+    parser = AntwortParser(lexer, 1)
+    expression = parser.question_head()
+    assert_equal(expression.number.value, 1)
+    assert_equal(expression.variable.label.text, 'Hast du im Jahr 2013 schon einmal mitgemacht?')   
+
 def test_question_head():
     'Matches a question head with asterisk: 1. Alter (age) *'
     input_file = ("1. Alter (age) *\n")

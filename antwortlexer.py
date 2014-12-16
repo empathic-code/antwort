@@ -34,7 +34,7 @@ class AntwortLexer(Lexer):
     def text(self):
         string = self._current_character
         self.consume()
-        while self.is_text(self._current_character):
+        while self.is_text(self._current_character) or self.is_digit(self._current_character):
 
             # handle escaping
             if self._current_character == '\\':
