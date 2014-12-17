@@ -23,6 +23,8 @@ Feel free to comment on what I could have done better, I am always eager to lear
 
 Specification
 -------------
+To get a feel for what language looks like, take a look at this [example](https://github.com/cessor/antwort/blob/master/examples/example.antwort.txt)
+
 Antwort contains a list of questions. A Question usually looks like this:
 
     1. How old are you? (age) *
