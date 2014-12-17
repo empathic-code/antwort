@@ -1,0 +1,39 @@
+# This is the pseudo grammar for ANTWORT. 
+Questions:      (Question LB)+ 
+Question:       QuestionHead Options
+QuestionHead:   Numbering StringVariable Asterisk? LB (explanation LB)?
+Options:        (RadioButtons | Checkboxes | Inputfield | Matrix | Scale | List ) LB
+
+RadioButtons:   (RadioButton LB)+
+RadioButton:    '(' WS* ')' StringVariable
+Checkboxes:     (Checkbox LB)+
+Checkbox:       '[' WS* ']' StringVariable 
+Inputfield:     Field FieldLine*
+Field:          '[' Placeholder ']' Range? LB
+FieldLine:      '[' US+ ]' LB
+Placeholder:    US Text US
+Matrix:         Scale List
+Scale:          '{' Steps '}' LB
+Steps:          Step SEP Step (SEP Step)+
+Step:           NumberVariable
+List:           '[' Elements ']'
+Elements:       Element+
+Element:        StringVariable LB
+
+StringVariable: Label Identifier
+NumberVariable: Label Value
+Label:          Text
+Identifier:     '(' Text  ')'
+NumberValue:    '(' Number ')'
+Range:          '(' Number '-' Number ')'
+Numbering:      Number '.'
+Explanation:    Text LB
+
+Text:           'a-zA-Z0-9' + 'äöüÄÖÜß' + Punctuation 
+Number:         '0-9'+
+SEP:            '--'
+US:             '_'+ # Underscore
+Asterisk:       '*'
+LB:             '\n'
+WS:             ' \t'
+Punctuation:    '!"$%&\'*+,-./:;<=>?@\\^`_|~ '
