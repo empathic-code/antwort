@@ -12,8 +12,9 @@ Options:
 """
 
 import sys
+import os
 import codecs
-from jinja2 import Template
+import jinja2
 from docopt import docopt
 
 from antwortlexer import AntwortLexer
@@ -29,12 +30,8 @@ def read(path):
     with open(path, 'r') as file:
         return file.read()
 
-def read_utf(path):
-    with codecs.open(path,'r','utf-8') as file:
-        return file.read()
-
 def write_utf(path, content):
-    with codecs.open(path,'w', 'utf-8-sig') as file:
+    with open(path, 'w') as file:
         file.write(content)
 
 def remove_empty_lines(text):
@@ -42,11 +39,22 @@ def remove_empty_lines(text):
     lines = [line for line in lines if line.strip()]
     return '\n'.join(lines)
 
-def transform(template, title, data):
-    template = Template(template)
+def transform(path, title, data):
+    path, filename = os.path.split(path)
+    template = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(path)
+        ).get_template(filename)
     template = template.render(title=title, questions=data.questions)
     template = remove_empty_lines(template)
+    print(template)
     return template
+
+class String(object):
+    def __init__(self, string):
+        self.string = string
+
+    def decode(self, *args, **kwargs):
+        return self.string
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
@@ -59,7 +67,7 @@ if __name__ == '__main__':
     title = (title if title else "Questionnaire - generated with ANTWORT")
 
     template = arguments['--template']
-    template = read_utf(template)
+    #template = read(template)
     template = transform(template, title, data)
 
     outfile = arguments['--out']
