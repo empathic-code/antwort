@@ -10,7 +10,7 @@ class Lexer(object):
     punctuation_marks = '#!"$%&\'*+,-./:;<=>?@\\^`|~'
     whitespace_no_break = '\x0b\x0c\t '
     german_letters = 'äöüÄÖÜß'
-    letters = string.letters + german_letters # a-zA-Z
+    letters = string.ascii_letters + german_letters # a-zA-Z
 
     def __init__(self, input_file):
         self._input = input_file

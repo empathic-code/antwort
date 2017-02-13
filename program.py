@@ -1,7 +1,7 @@
 """
 Antwort
 
-Usage: 
+Usage:
     program.py --template=<template> [--in=INFILE] [--out=<outfile>] [--title=TITLE]
 
 Options:
@@ -16,7 +16,7 @@ import codecs
 from jinja2 import Template
 from docopt import docopt
 
-from antwortlexer import AntwortLexer 
+from antwortlexer import AntwortLexer
 from antwortparser import AntwortParser
 
 def parse(input):
@@ -34,7 +34,7 @@ def read_utf(path):
         return file.read()
 
 def write_utf(path, content):
-    with codecs.open(path,'w', 'utf-8-sig') as file: 
+    with codecs.open(path,'w', 'utf-8-sig') as file:
         file.write(content)
 
 def remove_empty_lines(text):

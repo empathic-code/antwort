@@ -22,7 +22,7 @@ class AntwortParser(Parser):
         raise UnexpectedTokenException(message)
 
     def unexpected_constraint(self, constraint):
-        message = ('\Unexpected Type Constraint: Expecting "number" or "string" but found <%s>\n'
+        message = ('Unexpected Type Constraint: Expecting "number" or "string" but found <%s>\n'
                    'At   : Line %s, Position %s')
         line, position = self._lexer.location()
         message = message % ( constraint, line + 1, position)
@@ -30,7 +30,7 @@ class AntwortParser(Parser):
 
     def parse(self):
         return self.questions()
-        
+
     def questions(self):
         questions = []
         question = self.question()
@@ -45,7 +45,7 @@ class AntwortParser(Parser):
         return QuestionListExpression(questions)
 
     def question(self):
-        header = self.question_head()       
+        header = self.question_head()
         options = self.options()
         return QuestionExpression(header, options)
 
@@ -95,7 +95,7 @@ class AntwortParser(Parser):
         else:
             self.unexpected_token(self.next())
 
-    def checkboxes(self): 
+    def checkboxes(self):
         checkboxes = []
         # At least one
         checkbox = self.checkbox()
@@ -161,7 +161,7 @@ class AntwortParser(Parser):
 
     def matrixlist(self):
         self.match(LeftBracket)
-        self.match(LineBreak)       
+        self.match(LineBreak)
         elements = self.matrixelements()
         self.match(RightBracket)
         return MatrixListExpression(elements)
@@ -171,7 +171,7 @@ class AntwortParser(Parser):
 
     def list(self):
         self.match(LeftBracket)
-        self.match(LineBreak)       
+        self.match(LineBreak)
         elements = self.elements()
         self.match(RightBracket)
         return ListExpression(elements)
@@ -218,7 +218,7 @@ class AntwortParser(Parser):
         number = self.match(Number)
         self.match(Period)
         return NumberExpression(number.value)
-    
+
     def string_variable(self):
         label = self.label()
         identifier = self.identifier()

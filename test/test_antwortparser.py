@@ -10,11 +10,11 @@ mute = True
 # call tests with -vs
 
 def log(fn):
-    if mute: 
+    if mute:
         return fn
     def w(*args, **kwargs):
         s = args[0]
-        print s.next()
+        print(s.next())
         return fn(*args, **kwargs)
     return w
 
@@ -130,7 +130,7 @@ def test_question_head_with_number():
     parser = AntwortParser(lexer, 1)
     expression = parser.question_head()
     assert_equal(expression.number.value, 1)
-    assert_equal(expression.variable.label.text, 'Hast du im Jahr 2013 schon einmal mitgemacht?')   
+    assert_equal(expression.variable.label.text, 'Hast du im Jahr 2013 schon einmal mitgemacht?')
 
 def test_question_head():
     'Matches a question head with asterisk: 1. Alter (age) *'
