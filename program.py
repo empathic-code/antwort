@@ -46,7 +46,6 @@ def transform(path, title, data):
         ).get_template(filename)
     template = template.render(title=title, questions=data.questions)
     template = remove_empty_lines(template)
-    print(template)
     return template
 
 class String(object):
@@ -66,9 +65,9 @@ if __name__ == '__main__':
     title = arguments['--title']
     title = (title if title else "Questionnaire - generated with ANTWORT")
 
-    template = arguments['--template']
+    templatepath = arguments['--template']
     #template = read(template)
-    template = transform(template, title, data)
+    template = transform(templatepath, title, data)
 
     outfile = arguments['--out']
     if outfile:
