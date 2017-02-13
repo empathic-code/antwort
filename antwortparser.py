@@ -18,7 +18,7 @@ class AntwortParser(Parser):
         message = ('\nError: Expecting <%s> but found <%s>\n'
                    'At   : Line %s, Position %s')
         line, position = self._lexer.location()
-        message = message % ( token_type.__name__, self.next().type(), line + 1, position)
+        message = message % ( token_type, self.next().type(), line + 1, position)
         raise UnexpectedTokenException(message)
 
     def unexpected_constraint(self, constraint):

@@ -7,7 +7,7 @@ def all_tokens(lexer):
     tokens = []
     token = lexer.next_token()
     while not token.is_a(EoF):
-        tokens.append(token)    
+        tokens.append(token)
         token = lexer.next_token()
     tokens.append(token)
     return tokens
@@ -20,14 +20,14 @@ def print_actual(items):
 
 def throw(actual, expected):
     message = ("Sequence missmatch!\n"
-               "Expected: %s\n" 
+               "Expected: %s\n"
                "but got : %s' ")
     message = message % (print_expected(expected), print_actual(actual))
-    raise AssertionError(message)        
+    raise AssertionError(message)
 
 def compare_sequence(actual, expected):
     if len(actual) != len(expected):
-        throw(actual, expected) 
+        throw(actual, expected)
     for token, expected_type in zip(actual, expected):
         if not token.is_a(expected_type):
             throw(actual, expected)
@@ -51,6 +51,14 @@ def test_number():
 def test_text():
     "Tokenize a text"
     string = "Hello, how are you doing?"
+    lexer = AntwortLexer(string)
+    tokens = all_tokens(lexer)
+    expected = [Text, EoF]
+    compare_sequence(tokens, expected)
+
+def test_text_with_umlaut():
+    "Tokenize a text"
+    string = u"Änderung"
     lexer = AntwortLexer(string)
     tokens = all_tokens(lexer)
     expected = [Text, EoF]
@@ -177,10 +185,10 @@ def test_scale():
     tokens = all_tokens(lexer)
     expected = [
         LeftBrace,
-        
+
         Text,
         Identifier,
-        
+
         Separator,
 
         Text,

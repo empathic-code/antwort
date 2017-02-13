@@ -77,7 +77,7 @@ class AntwortLexer(Lexer):
 
         elif self.is_identifier(self._current_character):
             string = self.consume_while(self.is_identifier)
-        
+
         self.whitespace()
         self.match(')')
         return Identifier(string)
@@ -86,10 +86,10 @@ class AntwortLexer(Lexer):
         return self.identifier()
 
     def separator(self):
-        self.consume() # removes first - 
+        self.consume() # removes first -
         if self._current_character == '-':
             self.consume()
-            return Separator('--')       
+            return Separator('--')
 
         self.whitespace()
         if self.is_digit(self._current_character):
@@ -110,7 +110,7 @@ class AntwortLexer(Lexer):
             '}': RightBrace,
         }
         token_ctor = character_map.get(c, None)
-        if not token_ctor: 
+        if not token_ctor:
             raise Exception('Invalid Character: %s' % self._current_character)
         c = self._current_character
         self.consume()
@@ -122,11 +122,24 @@ class AntwortLexer(Lexer):
             if self.is_space(self._current_character):
                 self.whitespace()
                 continue
-            if self.is_linebreak(self._current_character):  return self.linebreak()
-            if self._current_character == '-':              return self.separator()
-            if self._current_character in '(':              return self.identifier()
-            if self.is_digit(self._current_character):      return self.number()
-            if self.is_letter(self._current_character):     return self.text()
-            if self._current_character == '_':              return self.underscore()
+
+            if self.is_linebreak(self._current_character):
+                return self.linebreak()
+
+            if self._current_character == '-':
+                return self.separator()
+
+            if self._current_character in '(':
+                return self.identifier()
+
+            if self.is_digit(self._current_character):
+                return self.number()
+
+            if self.is_letter(self._current_character):
+                return self.text()
+
+            if self._current_character == '_':
+                return self.underscore()
+
             return self.match_character(self._current_character)
         return EoF('EOF')

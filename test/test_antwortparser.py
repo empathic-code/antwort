@@ -112,6 +112,7 @@ def test_question_with_scale():
     assert_not_none(expression.header)
     assert_not_none(expression.options)
 
+
 def test_question_head():
     'Matches a question head: 1. Alter (age)'
     input_file = ("1. Alter (age)\n")
