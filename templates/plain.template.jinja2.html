@@ -15,7 +15,7 @@
               {% if question.header.explanation %}
               <blockquote>{{ question.header.explanation.text }}</blockquote>
               {% endif %}
-              {% if question.options.__str__() == 'InputFieldExpression' %}
+              {% if question.options.__str__() == 'InputField' %}
               {% if question.options.lines > 1 %}
               <textarea name="{{ question.header.variable.value }}" placeholder="{{ question.options.placeholder.placeholder }}" rows="{{ question.options.lines }}" {% if question.header.required %}required{% endif %}></textarea>
                 {% else %}
@@ -25,21 +25,21 @@
               <input type="text" name="{{ question.header.variable.value }}" placeholder="{{ question.options.placeholder.placeholder }}" {% if question.header.required %}required{% endif %}>
                   {% endif %}
                 {% endif %}
-              {% elif question.options.__str__() == 'RadioListExpression' %}
+              {% elif question.options.__str__() == 'RadioList' %}
               {% for radio in question.options.radios %}
               <input type="radio" name="{{ question.header.variable.value }}" value="{{ radio.variable.value }}" {% if question.header.required %}required{% endif %}>{{ radio.variable.label.text }}
                 {% endfor %}
-              {% elif question.options.__str__() == 'CheckBoxListExpression' %}
+              {% elif question.options.__str__() == 'CheckBoxList' %}
                 {% for checkbox in question.options.checkboxes %}
               <input type="checkbox" name="{{ question.header.variable.value }}" value="" {% if question.header.required %}required{% endif %}><span class="ripple"></span><span class="check"></span> {{ checkbox.variable.label.text }}
                 {% endfor %}
-              {% elif question.options.__str__() == 'ListExpression' %}
+              {% elif question.options.__str__() == 'List' %}
               <select name="{{ question.header.variable.value }}" {% if question.header.required %}required{% endif %}>
                 <option selected="selected" value="">Bitte auswählen</option>
                 {% for element in question.options.elements %}<option value="{{ element.variable.value.name }}">{{ element.variable.label.text }}</option>
                 {% endfor %}
               </select>
-              {% elif question.options.__str__() == 'MatrixExpression' %}
+              {% elif question.options.__str__() == 'Matrix' %}
               <table>
                 <thead>
                   <tr>
