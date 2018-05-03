@@ -51,7 +51,7 @@ class AntwortParser(BaseParser):
             while self.peek(LineBreak):
                 self.consume()
 
-        return QuestionList(questions)
+        return Questions(questions)
 
     def question(self):
         header = self.question_head()
@@ -72,7 +72,7 @@ class AntwortParser(BaseParser):
         if self.peek(Text):
             explanation = self.explanation()
 
-        return QuestionHead(number, variable, explanation, required)
+        return Caption(number, variable, explanation, required)
 
     def explanation(self):
         text = self.match(Text)
@@ -104,7 +104,7 @@ class AntwortParser(BaseParser):
             if self.peek(LineBreak) and self.peek_at(2, LeftBracket):
                 self.consume()  # kill linebreak
                 items = self.matrixlist()
-                return Matrix(scale, items)
+                return Grid(scale, items)
             return scale
         else:
             self.unexpected_token(self.next())
@@ -178,10 +178,10 @@ class AntwortParser(BaseParser):
         self.match(LineBreak)
         elements = self.matrixelements()
         self.match(RightBracket)
-        return MatrixList(elements)
+        return Rows(elements)
 
     def matrixelements(self):
-        return [MatrixElement(element.variable) for element in self.elements()]
+        return [Row(element.variable) for element in self.elements()]
 
     def list(self):
         self.match(LeftBracket)

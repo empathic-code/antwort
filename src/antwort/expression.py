@@ -12,9 +12,15 @@ class Expression(object):
         # This is used to provide data from deeply nested nodes
         # to other nodes on a similar level
         context = self._context(context)
+
+        # Walk all attributes
         for key, attribute in self._properties().items():
+
+            # Step Into Expressions
             if isinstance(attribute, Expression):
                 attribute.walk(visitor, depth + 1, context)
+
+            # Step into each item if it is a subexpression
             elif hasattr(attribute, '__iter__'):
                 for expression in attribute:
                     if not isinstance(expression, Expression):
@@ -30,7 +36,7 @@ class Expression(object):
                 if not key.startswith('_')}
 
 
-class QuestionList(Expression):
+class Questions(Expression):
     def __init__(self, question_expressions):
         self.questions = question_expressions
 
@@ -48,7 +54,7 @@ class Question(Expression):
         return context
 
 
-class QuestionHead(Expression):
+class Caption(Expression):
     def __init__(self, number_expression, variable_expression, label_expression, required=False):
         self.number = number_expression
         self.variable = variable_expression
@@ -56,7 +62,7 @@ class QuestionHead(Expression):
         self.required = required
 
 
-class Matrix(Expression):
+class Grid(Expression):
     def __init__(self, scale_expression, list_expression):
         self.scale = scale_expression
         self.list = list_expression
@@ -91,7 +97,7 @@ class List(Expression):
         self.elements = element_expressions
 
 
-class MatrixList(List):
+class Rows(List):
     pass
 
 
@@ -111,7 +117,7 @@ class CheckBox(Expression):
         self.variable = variable_expression
 
 
-class MatrixElement(Expression):
+class Row(Expression):
     def __init__(self, variable_expression):
         self.variable = variable_expression
 
