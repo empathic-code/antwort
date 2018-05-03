@@ -12,23 +12,22 @@ class Expression(object):
         # This is used to provide data from deeply nested nodes
         # to other nodes on a similar level
         context = self._context(context)
-        for key, attribute in self._properties().iteritems():
+        for key, attribute in self._properties().items():
             if isinstance(attribute, Expression):
-                attribute.walk(visitor, depth+1, context)
+                attribute.walk(visitor, depth + 1, context)
             elif hasattr(attribute, '__iter__'):
                 for expression in attribute:
                     if not isinstance(expression, Expression):
                         continue
-                    expression.walk(visitor, depth+1, context)
+                    expression.walk(visitor, depth + 1, context)
 
     def _context(self, context):
         return context
 
     def _properties(self):
         return {key: value for key, value
-                in self.__dict__.iteritems()
+                in self.__dict__.items()
                 if not key.startswith('_')}
-
 
 
 class QuestionListExpression(Expression):

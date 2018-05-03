@@ -2,7 +2,7 @@
 Antwort
 
 Usage:
-    antwort.py --template=<template> [--in=INFILE] [--out=<outfile>] [--title=TITLE]
+    antwort.py [--template=<template>] [--in=INFILE] [--out=<outfile>] [--title=TITLE]
 
 Options:
     --title=TITLE                       The title of the document
@@ -54,6 +54,18 @@ def render(path, title, data):
     return template
 
 
+class PythonVisitor(object):
+        def pre(self, expression, depth, context):
+            pass
+
+        def post(self, expression, depth, context):
+            pass
+
+
+def ast(data):
+    data.walk(PythonVisitor())
+
+
 class String(object):
     def __init__(self, string):
         self.string = string
@@ -73,10 +85,13 @@ if __name__ == '__main__':
     title = (title if title else "Questionnaire - generated with ANTWORT")
 
     templatepath = arguments['--template']
-    document = render(templatepath, title, data)
+    if not templatepath:
+        ast(data)
 
-    outfile = arguments['--out']
-    if outfile:
-        utf(outfile, document)
     else:
-        sys.stdout.write(document)
+        document = render(templatepath, title, data)
+        outfile = arguments['--out']
+        if outfile:
+            utf(outfile, document)
+        else:
+            sys.stdout.write(document)
