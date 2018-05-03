@@ -2,8 +2,8 @@
     ( ) Male (m)
     ( ) Female (w)
 
-2. Age (age) * 
-    How old are you? 
+2. Age (age) *
+    How old are you?
     [__ Age __] (0-100)
 
 3. Job (jobtype) *
@@ -91,7 +91,7 @@
     ( ) Nein (no)
 
 15. Comments (kotzbox)
-    Do you have comments or suggestions for us? 
+    Do you have comments or suggestions for us?
     [__ Kommentare _______]
     [_____________________]
     [_____________________]

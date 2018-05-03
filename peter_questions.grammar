@@ -1,5 +1,5 @@
-# This is the pseudo grammar for ANTWORT. 
-Questions:      (Question LB)+ 
+# This is the pseudo grammar for ANTWORT.
+Questions:      (Question LB)+
 Question:       QuestionHead Options
 QuestionHead:   Numbering StringVariable Asterisk? LB (explanation LB)?
 Options:        (RadioButtons | Checkboxes | Inputfield | Matrix | Scale | List ) LB
@@ -7,7 +7,7 @@ Options:        (RadioButtons | Checkboxes | Inputfield | Matrix | Scale | List 
 RadioButtons:   (RadioButton LB)+
 RadioButton:    '(' WS* ')' StringVariable
 Checkboxes:     (Checkbox LB)+
-Checkbox:       '[' WS* ']' StringVariable 
+Checkbox:       '[' WS* ']' StringVariable
 Inputfield:     Field FieldLine*
 Field:          '[' Placeholder ']' Range? LB
 FieldLine:      '[' US+ ]' LB
@@ -29,7 +29,7 @@ Range:          '(' Number '-' Number ')'
 Numbering:      Number '.'
 Explanation:    Text LB
 
-Text:           'a-zA-Z0-9' + 'äöüÄÖÜß' + Punctuation 
+Text:           'a-zA-Z0-9' + 'äöüÄÖÜß' + Punctuation
 Number:         '0-9'+
 SEP:            '--'
 US:             '_'+ # Underscore

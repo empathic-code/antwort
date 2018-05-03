@@ -1,11 +1,11 @@
-from baselexer import Lexer
-from antworttoken import *
+from .token_ import *
+from .baselexer import BaseLexer
 
 from collections import namedtuple
 Location = namedtuple('Location', ['Line', 'Position'])
 
 
-class AntwortLexer(Lexer):
+class AntwortLexer(BaseLexer):
     def __init__(self, input_file):
         super(AntwortLexer, self).__init__(input_file)
         self._lines_counter = 0
@@ -17,7 +17,7 @@ class AntwortLexer(Lexer):
     def linebreak(self):
         self._position_in_line = 0
         self._lines_counter += 1
-        self.consume()
+        self.consume_while(self.is_linebreak)
         return LineBreak('\\n')
 
     def whitespace(self):
@@ -119,7 +119,7 @@ class AntwortLexer(Lexer):
 
     def next_token(self):
         self._position_in_line += 1
-        while self._current_character != Lexer.EOF:
+        while self._current_character != BaseLexer.EOF:
             if self.is_space(self._current_character):
                 self.whitespace()
                 continue
