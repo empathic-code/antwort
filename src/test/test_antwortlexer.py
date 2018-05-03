@@ -52,7 +52,7 @@ def test_number():
     string = "1123."
     lexer = AntwortLexer(string)
     tokens = all_tokens(lexer)
-    expected = [Number, Period, EoF]
+    expected = [Digits, Period, EoF]
     compare_sequence(tokens, expected)
 
 
@@ -134,7 +134,7 @@ def test_number_range():
     string = "(0-100)"
     lexer = AntwortLexer(string)
     tokens = all_tokens(lexer)
-    expected = [Number, Number, EoF]
+    expected = [Digits, Digits, EoF]
     compare_sequence(tokens, expected)
 
 
@@ -143,7 +143,7 @@ def test_number_with_spaces_range():
     string = "( 0 - 100 )"
     lexer = AntwortLexer(string)
     tokens = all_tokens(lexer)
-    expected = [Number, Number, EoF]
+    expected = [Digits, Digits, EoF]
     compare_sequence(tokens, expected)
 
 
@@ -207,7 +207,7 @@ def test_input_field():
               "\t[__Alter__]")
     lexer = AntwortLexer(_input)
     tokens = all_tokens(lexer)
-    expected = [Number, Period, Text, Identifier, LineBreak,
+    expected = [Digits, Period, Text, Identifier, LineBreak,
                 LeftBracket, Underscore, Text, Underscore, RightBracket, EoF]
     compare_sequence(tokens, expected)
 

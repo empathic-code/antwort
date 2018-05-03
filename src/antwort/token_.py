@@ -29,9 +29,9 @@ class LeftBrace(Token): pass        # {
 class LeftBracket(Token): pass      # [
 class LeftParenthesis(Token): pass  # (
 class LineBreak(Token): pass        # \n
-class Number(Token):
+class Digits(Token):
     def __init__(self, value):
-        super(Number, self).__init__(int(value))
+        super(Digits, self).__init__(int(value))
 class Period(Token): pass           # .
 class Radio(Token): pass            # ( )
 class RightBrace(Token): pass       # }

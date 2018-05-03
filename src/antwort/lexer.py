@@ -49,9 +49,9 @@ class AntwortLexer(BaseLexer):
         # don't strip!
         return Text(string.strip())
 
-    def number(self):
+    def digits(self):
         num = self.consume_while(self.is_digit)
-        return Number(num)
+        return Digits(num)
 
     def underscore(self):
         score = self.consume_while(lambda c: c == '_')
@@ -74,7 +74,7 @@ class AntwortLexer(BaseLexer):
             string = self.consume_while(self.is_digit)
             self.whitespace()
             if self._current_character == '-':
-                return Number(string)
+                return Digits(string)
 
         elif self.is_identifier(self._current_character):
             string = self.consume_while(self.is_identifier)
@@ -94,7 +94,7 @@ class AntwortLexer(BaseLexer):
 
         self.whitespace()
         if self.is_digit(self._current_character):
-            token = self.number()
+            token = self.digits()
             self.whitespace()
             self.match(')')
             return token
@@ -134,7 +134,7 @@ class AntwortLexer(BaseLexer):
                 return self.identifier()
 
             if self.is_digit(self._current_character):
-                return self.number()
+                return self.digits()
 
             if self.is_letter(self._current_character):
                 return self.text()

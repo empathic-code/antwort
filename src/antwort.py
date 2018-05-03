@@ -20,6 +20,7 @@ from docopt import docopt
 
 from antwort.lexer import AntwortLexer
 from antwort.parser import AntwortParser
+from antwort.expression import Expression
 
 
 def parse(input):
@@ -54,24 +55,53 @@ def render(path, title, data):
     return template
 
 
+class Kwargs(object):
+    def __init__(self, expression):
+        self._expression = expression
+
+    def __str__(self):
+
+        fields = { key:value
+                    for key, value in self._expression.__dict__.items()
+                    if not key.startswith('_')
+                    and not key == 'walk'
+                    and not isinstance(value, Expression)
+                }
+
+        fields = [
+            '%s=%s' % (key, value) for key,value in fields.items()
+        ]
+        return ', '.join(fields) + ','
+
+
+
+class Constructor(object):
+    def __init__(self, expression):
+        self._expression = expression
+
+    def __str__(self):
+        return self._expression.__class__.__name__
+
+
 class PythonVisitor(object):
         def pre(self, expression, depth, context):
-            pass
+            print('    ' * (depth), Constructor(expression), '(')
+            print('    ' * (depth + 1), Kwargs(expression))
 
         def post(self, expression, depth, context):
-            pass
+            print('    ' * depth, ')')
 
 
 def ast(data):
     data.walk(PythonVisitor())
 
 
-class String(object):
-    def __init__(self, string):
-        self.string = string
+# class String(object):
+#     def __init__(self, string):
+#         self.string = string
 
-    def decode(self, *args, **kwargs):
-        return self.string
+#     def decode(self, *args, **kwargs):
+#         return self.string
 
 
 if __name__ == '__main__':

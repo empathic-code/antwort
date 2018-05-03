@@ -375,7 +375,7 @@ def test_identifier_with_type_constraint():
     assert_equal(expression.name, 'm')
 
 
-def test_identifire_with_underscores():
+def test_identifier_with_underscores():
     'Matches an identifier with underscores: (years_active)'
     input_file = ("(years_active)")
     lexer = AntwortLexer(input_file)

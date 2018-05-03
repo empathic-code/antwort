@@ -22,7 +22,7 @@ class AntwortParser(BaseParser):
                    'At   : Line %s, Position %s')
         line, position = self._lexer.location()
         message = message % (
-            token_type, self.next().type(), line + 1, position)
+            token_type.__name__, self.next().type(), line + 1, position)
         raise UnexpectedTokenException(message)
 
     def unexpected_constraint(self, constraint):
@@ -44,19 +44,19 @@ class AntwortParser(BaseParser):
         while self.peek(LineBreak):
             self.consume()
 
-        while self.peek(Number):
+        while self.peek(Digits):
             question = self.question()
             questions.append(question)
 
             while self.peek(LineBreak):
                 self.consume()
 
-        return QuestionListExpression(questions)
+        return QuestionList(questions)
 
     def question(self):
         header = self.question_head()
         options = self.options()
-        return QuestionExpression(header, options)
+        return Question(header, options)
 
     def question_head(self):
         number = self.numbering()
@@ -72,12 +72,12 @@ class AntwortParser(BaseParser):
         if self.peek(Text):
             explanation = self.explanation()
 
-        return QuestionHeadExpression(number, variable, explanation, required)
+        return QuestionHead(number, variable, explanation, required)
 
     def explanation(self):
         text = self.match(Text)
         self.match(LineBreak)
-        return LabelExpression(text.value)
+        return Label(text.value)
 
     def options(self):
 
@@ -104,7 +104,7 @@ class AntwortParser(BaseParser):
             if self.peek(LineBreak) and self.peek_at(2, LeftBracket):
                 self.consume()  # kill linebreak
                 items = self.matrixlist()
-                return MatrixExpression(scale, items)
+                return Matrix(scale, items)
             return scale
         else:
             self.unexpected_token(self.next())
@@ -119,13 +119,13 @@ class AntwortParser(BaseParser):
             checkbox = self.checkbox()
             checkboxes.append(checkbox)
             self.match(LineBreak)
-        return CheckBoxListExpression(checkboxes)
+        return CheckBoxList(checkboxes)
 
     def checkbox(self):
         self.match(LeftBracket)
         self.match(RightBracket)
         variable = self.string_variable()
-        return CheckBoxExpression(variable)
+        return CheckBox(variable)
 
     def radio_buttons(self):
         radios = []
@@ -137,18 +137,18 @@ class AntwortParser(BaseParser):
             radio = self.radio()
             radios.append(radio)
             self.match(LineBreak)
-        return RadioListExpression(radios)
+        return RadioList(radios)
 
     def radio(self):
         self.match(Radio)
         variable = self.string_variable()
-        return RadioButtonExpression(variable)
+        return RadioButton(variable)
 
     def input_field(self):
         placeholder = self.field()
 
         _range = None
-        if self.peek(Number) and self.peek_at(2, Number):
+        if self.peek(Digits) and self.peek_at(2, Digits):
             _range = self.range()
 
         line_counter = 1
@@ -156,7 +156,7 @@ class AntwortParser(BaseParser):
             self.consume()  # get rid of linebreak
             self.field_line()
             line_counter += 1
-        return InputFieldExpression(placeholder, line_counter, _range)
+        return InputField(placeholder, line_counter, _range)
 
     def field(self):
         self.match(LeftBracket)
@@ -168,7 +168,7 @@ class AntwortParser(BaseParser):
         head = self.match(Underscore)
         placeholder = self.match(Text)
         tail = self.match(Underscore)
-        return PlaceholderExpression(placeholder.value, len(head.value + tail.value + placeholder.value))
+        return Placeholder(placeholder.value, len(head.value + tail.value + placeholder.value))
 
     def field_line(self):
         self.match_all(LeftBracket, Underscore, RightBracket)
@@ -178,17 +178,17 @@ class AntwortParser(BaseParser):
         self.match(LineBreak)
         elements = self.matrixelements()
         self.match(RightBracket)
-        return MatrixListExpression(elements)
+        return MatrixList(elements)
 
     def matrixelements(self):
-        return [MatrixElementExpression(element.variable) for element in self.elements()]
+        return [MatrixElement(element.variable) for element in self.elements()]
 
     def list(self):
         self.match(LeftBracket)
         self.match(LineBreak)
         elements = self.elements()
         self.match(RightBracket)
-        return ListExpression(elements)
+        return List(elements)
 
     def elements(self):
         elements = []
@@ -203,13 +203,13 @@ class AntwortParser(BaseParser):
 
     def element(self):
         variable = self.string_variable()
-        return ElementExpression(variable)
+        return Element(variable)
 
     def scale(self):
         self.match(LeftBrace)
         steps = self.steps()
         self.match(RightBrace)
-        return ScaleExpression(steps)
+        return Scale(steps)
 
     def steps(self):
         # at least two
@@ -229,33 +229,33 @@ class AntwortParser(BaseParser):
         return self.number_variable()
 
     def numbering(self):
-        number = self.match(Number)
+        number = self.match(Digits)
         self.match(Period)
-        return NumberExpression(number.value)
+        return Number(number.value)
 
     def string_variable(self):
         label = self.label()
         identifier = self.identifier()
-        return VariableExpression(label, identifier)
+        return Variable(label, identifier)
 
     def number_variable(self):
         label = self.label()
         value = self.number_value()
-        return VariableExpression(label, value)
+        return Variable(label, value)
 
     def range(self):
-        _min = self.match(Number).value
-        _max = self.match(Number).value
-        return RangeExpression(_min, _max)
+        _min = self.match(Digits).value
+        _max = self.match(Digits).value
+        return Range(_min, _max)
 
     def label(self):
         label = self.match(Text)
-        return LabelExpression(label.value)
+        return Label(label.value)
 
     def identifier(self):
         name = self.match(Identifier).value
-        return IdentifierExpression(name)
+        return Name(name)
 
     def number_value(self):
         token = self.match(Identifier)
-        return NumberExpression(token.value)
+        return Number(token.value)

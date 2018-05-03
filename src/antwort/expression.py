@@ -30,12 +30,12 @@ class Expression(object):
                 if not key.startswith('_')}
 
 
-class QuestionListExpression(Expression):
+class QuestionList(Expression):
     def __init__(self, question_expressions):
         self.questions = question_expressions
 
 
-class QuestionExpression(Expression):
+class Question(Expression):
     def __init__(self, header_expression, option_expression):
         self.header = header_expression
         self.options = option_expression
@@ -48,7 +48,7 @@ class QuestionExpression(Expression):
         return context
 
 
-class QuestionHeadExpression(Expression):
+class QuestionHead(Expression):
     def __init__(self, number_expression, variable_expression, label_expression, required=False):
         self.number = number_expression
         self.variable = variable_expression
@@ -56,7 +56,7 @@ class QuestionHeadExpression(Expression):
         self.required = required
 
 
-class MatrixExpression(Expression):
+class Matrix(Expression):
     def __init__(self, scale_expression, list_expression):
         self.scale = scale_expression
         self.list = list_expression
@@ -68,17 +68,17 @@ class MatrixExpression(Expression):
         return context
 
 
-class CheckBoxListExpression(Expression):
+class CheckBoxList(Expression):
     def __init__(self, checkbox_expressions):
         self.checkboxes = checkbox_expressions
 
 
-class RadioListExpression(Expression):
+class RadioList(Expression):
     def __init__(self, checkbox_expressions):
         self.radios = checkbox_expressions
 
 
-class InputFieldExpression(Expression):
+class InputField(Expression):
     def __init__(self, placeholder_expression, lines, range_expression=None):
         self.placeholder = placeholder_expression
         self.lines = lines
@@ -86,59 +86,59 @@ class InputFieldExpression(Expression):
         self.type = ('number' if range_expression else 'string')
 
 
-class ListExpression(Expression):
+class List(Expression):
     def __init__(self, element_expressions):
         self.elements = element_expressions
 
 
-class MatrixListExpression(ListExpression):
+class MatrixList(List):
     pass
 
 
-class PlaceholderExpression(Expression):
+class Placeholder(Expression):
     def __init__(self, placeholder, length):
         self.placeholder = placeholder
         self.length = int(length)
 
 
-class RadioButtonExpression(Expression):
+class RadioButton(Expression):
     def __init__(self, variable_expression):
         self.variable = variable_expression
 
 
-class CheckBoxExpression(Expression):
+class CheckBox(Expression):
     def __init__(self, variable_expression):
         self.variable = variable_expression
 
 
-class MatrixElementExpression(Expression):
+class MatrixElement(Expression):
     def __init__(self, variable_expression):
         self.variable = variable_expression
 
 
-class ElementExpression(Expression):
+class Element(Expression):
     def __init__(self, variable_expression):
         self.variable = variable_expression
 
 
-class ScaleExpression(Expression):
+class Scale(Expression):
     def __init__(self, step_expressions):
         self.steps = step_expressions
 
 
-class VariableExpression(Expression):
+class Variable(Expression):
     def __init__(self, label_expression, value_expression):
         self.label = label_expression
         self.value = value_expression
 
 
-class RangeExpression(Expression):
+class Range(Expression):
     def __init__(self, _min, _max):
         self.min = _min
         self.max = _max
 
 
-class IdentifierExpression(Expression):
+class Name(Expression):
     def __init__(self, name):
         self.name = name
 
@@ -146,7 +146,7 @@ class IdentifierExpression(Expression):
         return self.name
 
 
-class LabelExpression(Expression):
+class Label(Expression):
     def __init__(self, text):
         self.text = text
 
@@ -154,7 +154,7 @@ class LabelExpression(Expression):
         return self.text
 
 
-class NumberExpression(Expression):
+class Number(Expression):
     def __init__(self, value):
         self.value = int(value)
 
