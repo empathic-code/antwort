@@ -1,7 +1,8 @@
-#encoding: utf-8
+# encoding: utf-8
 from nose.tools import *
 from antwortlexer import AntwortLexer
 from antworttoken import *
+
 
 def all_tokens(lexer):
     tokens = []
@@ -12,11 +13,14 @@ def all_tokens(lexer):
     tokens.append(token)
     return tokens
 
+
 def print_expected(items):
     return "[%s]" % ', '.join([item.__name__ for item in items])
 
+
 def print_actual(items):
     return "[%s]" % ', '.join([item.type() for item in items])
+
 
 def throw(actual, expected):
     message = ("Sequence missmatch!\n"
@@ -25,12 +29,14 @@ def throw(actual, expected):
     message = message % (print_expected(expected), print_actual(actual))
     raise AssertionError(message)
 
+
 def compare_sequence(actual, expected):
     if len(actual) != len(expected):
         throw(actual, expected)
     for token, expected_type in zip(actual, expected):
         if not token.is_a(expected_type):
             throw(actual, expected)
+
 
 def test_asterisk():
     "Tokenize an asterisk *"
@@ -40,6 +46,7 @@ def test_asterisk():
     expected = [Asterisk, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_number():
     "Tokenize a number 1123."
     string = "1123."
@@ -47,6 +54,7 @@ def test_number():
     tokens = all_tokens(lexer)
     expected = [Number, Period, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_text():
     "Tokenize a text"
@@ -56,6 +64,7 @@ def test_text():
     expected = [Text, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_text_with_umlaut():
     "Tokenize a text"
     string = u"Änderung"
@@ -64,6 +73,7 @@ def test_text_with_umlaut():
     expected = [Text, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_linebreak():
     "Tokenize a text with linebreaks"
     string = "Hello, how are you doing? \n Hello, I'm good, thank you!"
@@ -71,6 +81,7 @@ def test_linebreak():
     tokens = all_tokens(lexer)
     expected = [Text, LineBreak, Text, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_indentation():
     "Should ignore indentation in text"
@@ -81,6 +92,7 @@ def test_indentation():
     compare_sequence(tokens, expected)
     assert_equals(tokens[0].value, 'Hello')
 
+
 def test_parens():
     "Tokenize identifier: (parenthesis)"
     string = "( text )"
@@ -88,6 +100,7 @@ def test_parens():
     tokens = all_tokens(lexer)
     expected = [Identifier, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_identifier():
     "Tokenize identifier with underscore: (under_score)"
@@ -97,6 +110,7 @@ def test_identifier():
     expected = [Identifier, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_identifier_with_type():
     "Tokenize identifier with underscore: (identifier)"
     string = "( identifier )"
@@ -104,6 +118,7 @@ def test_identifier_with_type():
     tokens = all_tokens(lexer)
     expected = [Identifier, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_number_range():
     "Tokenize number range: (0-100)"
@@ -113,6 +128,7 @@ def test_number_range():
     expected = [Number, Number, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_number_with_spaces_range():
     "Tokenize number range: ( 0 - 100 )"
     string = "( 0 - 100 )"
@@ -120,6 +136,7 @@ def test_number_with_spaces_range():
     tokens = all_tokens(lexer)
     expected = [Number, Number, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_brackets():
     "Tokenize a text in [brackets]"
@@ -129,6 +146,7 @@ def test_brackets():
     expected = [LeftBracket, Text, RightBracket, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_braces():
     "Tokenize a text in {braces}"
     string = "{ text }"
@@ -136,6 +154,7 @@ def test_braces():
     tokens = all_tokens(lexer)
     expected = [LeftBrace, Text, RightBrace, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_checkbox():
     "Tokenize a checkbox"
@@ -145,6 +164,7 @@ def test_checkbox():
     expected = [LeftBracket, RightBracket, Text, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_radio_buttons():
     "Tokenize a radio button"
     string = "() Hello"
@@ -152,6 +172,7 @@ def test_radio_buttons():
     tokens = all_tokens(lexer)
     expected = [Radio, Text, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_underscore():
     "Tokenize an underscore"
@@ -161,6 +182,7 @@ def test_underscore():
     expected = [Underscore, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_separator():
     "Tokenize an list separator --"
     string = "-- --"
@@ -169,14 +191,17 @@ def test_separator():
     expected = [Separator, Separator, EoF]
     compare_sequence(tokens, expected)
 
+
 def test_input_field():
     "Tokenize an input field (example)"
     _input = ("2. Alter (age)\n"
               "\t[__Alter__]")
     lexer = AntwortLexer(_input)
     tokens = all_tokens(lexer)
-    expected = [Number, Period, Text, Identifier, LineBreak, LeftBracket, Underscore, Text, Underscore, RightBracket, EoF]
+    expected = [Number, Period, Text, Identifier, LineBreak,
+                LeftBracket, Underscore, Text, Underscore, RightBracket, EoF]
     compare_sequence(tokens, expected)
+
 
 def test_scale():
     "Tokenize a scale definition (example)"
@@ -200,5 +225,5 @@ def test_scale():
         Identifier,
 
         RightBrace,
-    EoF]
+        EoF]
     compare_sequence(tokens, expected)

@@ -1,45 +1,55 @@
-#encoding: utf-8
+# encoding: utf-8
 from nose.tools import *
 from antwortlexer import AntwortLexer
 from antwortparser import AntwortParser
 
+
 def assert_not_none(obj):
     assert_not_equal(obj, None)
+
 
 mute = True
 # call tests with -vs
 
+
 def log(fn):
     if mute:
         return fn
+
     def w(*args, **kwargs):
         s = args[0]
         print(s.next())
         return fn(*args, **kwargs)
     return w
 
+
 AntwortParser.match = log(AntwortParser.match)
+
 
 def test_question_with_checkboxes():
     'Case: Matches a question with a checkbox'
+    # Careful: We need the newline at the end!
     input_file = ("1. Geschlecht (gender)\n"
                   "[ ] Männlich (m)\n"
                   "[ ] Weiblich (w)\n"
-                  "[ ] Andere (o)\n") # Careful: We need this newline at the end!
+                  "[ ] Andere (o)\n")
     lexer = AntwortLexer(input_file)
     parser = AntwortParser(lexer, 2)
     parser.question()
 
+
 def test_question_with_checkboxes_and_explanation():
     'Case: Matches a question with checkboxes and optional explanatory text'
+    # Careful: We need this newline at the end!
     input_file = ("1. Geschlecht (gender)\n"
                   "Sag mir, wie du dich fühlst!\n"
                   "[ ] Männlich (m)\n"
                   "[ ] Weiblich (w)\n"
-                  "[ ] Andere (o)\n") # Careful: We need this newline at the end!
+                  "[ ] Andere (o)\n")
     lexer = AntwortLexer(input_file)
     parser = AntwortParser(lexer, 2)
     parser.question()
+
 
 def test_two_questions_with_checkboxes():
     'Case: Matches two questions with checkboxes'
@@ -54,6 +64,7 @@ def test_two_questions_with_checkboxes():
     parser = AntwortParser(lexer, 2)
     parser.questions()
 
+
 def test_case_question_with_checkboxes():
     'Case: Question with checkboxes'
     input_file = """1. Geschlecht (gender)
@@ -66,6 +77,7 @@ def test_case_question_with_checkboxes():
     parser = AntwortParser(lexer, 2)
     parser.question()
 
+
 def test_case_question_with_radio_buttons():
     'Case: Question with radios'
     input_file = """1. Geschlecht (gender)
@@ -77,6 +89,7 @@ def test_case_question_with_radio_buttons():
     lexer = AntwortLexer(input_file)
     parser = AntwortParser(lexer, 2)
     parser.question()
+
 
 def test_question_with_dropdown():
     'Case: Question with dropdown'
@@ -91,6 +104,7 @@ def test_question_with_dropdown():
     parser = AntwortParser(lexer, 2)
     parser.question()
 
+
 def test_question_with_input_field():
     'Case: Question with input_field'
     input_file = """1. Wo wohnst du? (city)
@@ -100,6 +114,7 @@ def test_question_with_input_field():
     lexer = AntwortLexer(input_file)
     parser = AntwortParser(lexer, 2)
     parser.question()
+
 
 def test_question_with_scale():
     'Case: Question with scale'
@@ -124,14 +139,20 @@ def test_question_head():
     assert_equal(expression.variable.value.name, 'age')
     assert_equal(expression.explanation, None)
 
+
 def test_question_head_with_number():
-    'Matches a question head that contains a number: 1. Hast du im Jahr 2013 schon einmal mitgemacht? (follow_up)'
-    input_file = ("1. Hast du im Jahr 2013 schon einmal mitgemacht? (follow_up)\n")
+    '''Matches a question head that contains a number:
+    1. Hast du im Jahr 2013 sch
+on einmal mitgemacht? (follow_up)'''
+    input_file = (
+        "1. Hast du im Jahr 2013 schon einmal mitgemacht? (follow_up)\n")
     lexer = AntwortLexer(input_file)
     parser = AntwortParser(lexer, 1)
     expression = parser.question_head()
     assert_equal(expression.number.value, 1)
-    assert_equal(expression.variable.label.text, 'Hast du im Jahr 2013 schon einmal mitgemacht?')
+    assert_equal(expression.variable.label.text,
+                 'Hast du im Jahr 2013 schon einmal mitgemacht?')
+
 
 def test_question_head():
     'Matches a question head with asterisk: 1. Alter (age) *'
@@ -145,6 +166,7 @@ def test_question_head():
     assert_equal(expression.required, True)
     assert_equal(expression.explanation, None)
 
+
 def test_question_head_with_explanation():
     'Matches a question head with explanation: 1. Alter (age) \ Wie alt bist du?'
     input_file = ("1. Alter (age)\n"
@@ -157,6 +179,7 @@ def test_question_head_with_explanation():
     assert_equal(expression.variable.value.name, 'age')
     assert_equal(expression.required, False)
     assert_equal(expression.explanation.text, 'That explains many')
+
 
 def test_option_checkboxes():
     'Matches checkbox list'
@@ -173,6 +196,7 @@ def test_option_checkboxes():
     assert_equal(expression.checkboxes[2].variable.label.text, 'Andere')
     assert_equal(expression.checkboxes[2].variable.value.name, 'o')
 
+
 def test_option_radios():
     'Matches checkbox list'
     input_file = ("() Männlich (m)\n"
@@ -188,6 +212,7 @@ def test_option_radios():
     assert_equal(expression.radios[2].variable.label.text, 'Andere')
     assert_equal(expression.radios[2].variable.value.name, 'o')
 
+
 def test_option_radio():
     'Matches a radio button: '
     input_file = ("( ) Männlich (m)")
@@ -197,6 +222,7 @@ def test_option_radio():
     assert_equal(expression.variable.label.text, 'Männlich')
     assert_equal(expression.variable.value.name, 'm')
 
+
 def test_option_checkbox():
     'Matches a checkbox: '
     input_file = ("[ ] Männlich (m)")
@@ -205,6 +231,7 @@ def test_option_checkbox():
     expression = parser.checkbox()
     assert_equal(expression.variable.label.text, 'Männlich')
     assert_equal(expression.variable.value.name, 'm')
+
 
 def test_input_field():
     'Matches an input field: [__test__] \ [__ __]'
@@ -217,6 +244,7 @@ def test_input_field():
     assert_equal(expression.placeholder.length, 2 + len('placeholder') + 2)
     assert_equal(expression.lines, 2)
 
+
 def test_field():
     'Matches a field placeholder: [__test__]'
     input_file = "[__ placeholder __]"
@@ -225,6 +253,7 @@ def test_field():
     expression = parser.field()
     assert_equal(expression.placeholder, 'placeholder')
     assert_equal(expression.length, 2 + len('placeholder') + 2)
+
 
 def test_input_field_with_range():
     'Matches a field with range: [__test__] (1 - 5)'
@@ -235,6 +264,7 @@ def test_input_field_with_range():
     assert_equal(expression.type, 'number')
     assert_equal(expression.range.min, 1)
     assert_equal(expression.range.max, 999)
+
 
 def test_matrix():
     'Matches a matrix (Scale and List of Items)'
@@ -250,6 +280,7 @@ def test_matrix():
     assert_equal(expression.scale.steps[0].label.text, 'Sau Geil')
     assert_equal(expression.list.elements[0].variable.label.text, 'Mannheim')
 
+
 def test_scale():
     'Matches a scale: { Sehr gut (1) -- Gut (2) }'
     input_file = ("{ Sehr gut (1) -- Gut (2) }")
@@ -260,6 +291,7 @@ def test_scale():
     assert_equal(expression.steps[0].value.value, 1)
     assert_equal(expression.steps[1].label.text, 'Gut')
     assert_equal(expression.steps[1].value.value, 2)
+
 
 def test_list():
     'Matches a list of items: [ A (a) \ B (b) ...]'
@@ -275,6 +307,7 @@ def test_list():
     assert_equal(expression.elements[1].variable.label.text, 'Gut')
     assert_equal(expression.elements[1].variable.value.name, 'g')
 
+
 def test_element():
     'Matches an element in a list'
     input_file = "Sehr gut (sg)\n"
@@ -283,6 +316,7 @@ def test_element():
     expression = parser.element()
     assert_equal(expression.variable.label.text, 'Sehr gut')
     assert_equal(expression.variable.value.name, 'sg')
+
 
 def test_string_variable():
     'Matches a string variable: Hauptschule (hs)'
@@ -293,6 +327,7 @@ def test_string_variable():
     assert_equal(expression.label.text, 'Hauptschule')
     assert_equal(expression.value.name, 'hs')
 
+
 def test_string_variable():
     'Matches a number variable: Verhandlungssicher (5)'
     input_file = ("Verhandlungssicher (5)")
@@ -302,6 +337,7 @@ def test_string_variable():
     assert_equal(expression.label.text, 'Verhandlungssicher')
     assert_equal(expression.value.value, 5)
 
+
 def test_numbering():
     'Matches a numbering: 123.'
     input_file = ("123.")
@@ -310,6 +346,7 @@ def test_numbering():
     expression = parser.numbering()
     assert_equal(expression.value, 123)
 
+
 def test_identifier():
     'Matches an identifier: (m)'
     input_file = ("(m)")
@@ -317,6 +354,7 @@ def test_identifier():
     parser = AntwortParser(lexer, 1)
     expression = parser.identifier()
     assert_equal(expression.name, 'm')
+
 
 def test_range():
     'Matches a range: (1 - 2)'
@@ -327,6 +365,7 @@ def test_range():
     assert_equal(expression.min, 1)
     assert_equal(expression.max, 2)
 
+
 def test_identifier_with_type_constraint():
     'Matches an identifier with type constraint: (m)'
     input_file = ("(m)")
@@ -335,6 +374,7 @@ def test_identifier_with_type_constraint():
     expression = parser.identifier()
     assert_equal(expression.name, 'm')
 
+
 def test_identifire_with_underscores():
     'Matches an identifier with underscores: (years_active)'
     input_file = ("(years_active)")
@@ -342,6 +382,7 @@ def test_identifire_with_underscores():
     parser = AntwortParser(lexer, 2)
     expression = parser.identifier()
     assert_equal(expression.name, 'years_active')
+
 
 def test_value():
     'Matches a value: (12)'

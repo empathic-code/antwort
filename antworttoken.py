@@ -17,7 +17,7 @@ class Token(object):
 
 class Text(Token): pass
 class Identifier(Token): pass
-class Number(Token): 
+class Number(Token):
     def __init__(self, value):
         super(Number, self).__init__(int(value))
 
@@ -27,12 +27,12 @@ class Separator(Token): pass        # --
 class Asterisk(Token): pass         # *
 class Comma(Token): pass            # .
 class Period(Token): pass           # .
-class LeftParenthesis(Token): pass  # (  
-class RightParenthesis(Token): pass # )     
+class LeftParenthesis(Token): pass  # (
+class RightParenthesis(Token): pass # )
 class LeftBracket(Token): pass      # [
 class RightBracket(Token): pass     # ]
 class LeftBrace(Token): pass        # {
-class RightBrace(Token): pass       # } 
-class LineBreak(Token): pass        # \n    
-class Indent(Token): pass           # \t    
+class RightBrace(Token): pass       # }
+class LineBreak(Token): pass        # \n
+class Indent(Token): pass           # \t
 class EoF(Token): pass              # EOF

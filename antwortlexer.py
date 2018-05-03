@@ -4,6 +4,7 @@ from antworttoken import *
 from collections import namedtuple
 Location = namedtuple('Location', ['Line', 'Position'])
 
+
 class AntwortLexer(Lexer):
     def __init__(self, input_file):
         super(AntwortLexer, self).__init__(input_file)
@@ -38,9 +39,9 @@ class AntwortLexer(Lexer):
 
             # handle escaping
             if self._current_character == '\\':
-                self.consume() # Eat SLASH
+                self.consume()  # Eat SLASH
                 string += self._current_character
-                self.consume() # EAT NEXT CHAR
+                self.consume()  # EAT NEXT CHAR
 
             string += self._current_character
             self.consume()
@@ -53,7 +54,7 @@ class AntwortLexer(Lexer):
         return Number(num)
 
     def underscore(self):
-        score = self.consume_while(lambda c: c=='_')
+        score = self.consume_while(lambda c: c == '_')
         return Underscore(score)
 
     def is_identifier(self, c):
@@ -61,7 +62,7 @@ class AntwortLexer(Lexer):
         return c in (self.letters + self.UNDERSCORE)
 
     def identifier(self):
-        self.consume() # remove '('
+        self.consume()  # remove '('
         string = None
         self.whitespace()
 
@@ -86,7 +87,7 @@ class AntwortLexer(Lexer):
         return self.identifier()
 
     def separator(self):
-        self.consume() # removes first -
+        self.consume()  # removes first -
         if self._current_character == '-':
             self.consume()
             return Separator('--')

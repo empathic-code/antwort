@@ -1,9 +1,12 @@
-#encoding: utf-8
+# encoding: utf-8
 from baseparser import Parser, UnexpectedTokenException
 from expression import *
 from antworttoken import *
 
-class UnexpectedTypeConstraint(Exception): pass
+
+class UnexpectedTypeConstraint(Exception):
+    pass
+
 
 class AntwortParser(Parser):
     def __init__(self, lexer, lookahead_size):
@@ -18,14 +21,16 @@ class AntwortParser(Parser):
         message = ('\nError: Expecting <%s> but found <%s>\n'
                    'At   : Line %s, Position %s')
         line, position = self._lexer.location()
-        message = message % ( token_type, self.next().type(), line + 1, position)
+        message = message % (
+            token_type, self.next().type(), line + 1, position)
         raise UnexpectedTokenException(message)
 
     def unexpected_constraint(self, constraint):
-        message = ('Unexpected Type Constraint: Expecting "number" or "string" but found <%s>\n'
+        message = ('Unexpected Type Constraint: '
+                   'Expecting "number" or "string" but found <%s>\n'
                    'At   : Line %s, Position %s')
         line, position = self._lexer.location()
-        message = message % ( constraint, line + 1, position)
+        message = message % (constraint, line + 1, position)
         raise UnexpectedTypeConstraint(message)
 
     def parse(self):
@@ -88,7 +93,7 @@ class AntwortParser(Parser):
             scale = self.scale()
             # Optional List of Items [ ... ]
             if self.peek(LineBreak) and self.peek_at(2, LeftBracket):
-                self.consume() # kill linebreak
+                self.consume()  # kill linebreak
                 items = self.matrixlist()
                 return MatrixExpression(scale, items)
             return scale
@@ -139,7 +144,7 @@ class AntwortParser(Parser):
 
         line_counter = 1
         while self.peek(LineBreak) and self.peek_at(2, LeftBracket):
-            self.consume() # get rid of linebreak
+            self.consume()  # get rid of linebreak
             self.field_line()
             line_counter += 1
         return InputFieldExpression(placeholder, line_counter, _range)
@@ -152,7 +157,7 @@ class AntwortParser(Parser):
 
     def placeholder(self):
         head = self.match(Underscore)
-        placeholder = self.match( Text)
+        placeholder = self.match(Text)
         tail = self.match(Underscore)
         return PlaceholderExpression(placeholder.value, len(head.value + tail.value + placeholder.value))
 

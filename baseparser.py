@@ -1,10 +1,13 @@
 # encoding: utf-8
 """
-I apologize for the name of this module. 'base' is just another weasel word. 
+I apologize for the name of this module. 'base' is just another weasel word.
 I would have called it parser, but Python started bitching because there already is a parser.py module in the standard lib.
 """
 
-class UnexpectedTokenException(Exception): pass
+
+class UnexpectedTokenException(Exception):
+    pass
+
 
 class Parser(object):
     def __init__(self, lexer, k):
@@ -14,7 +17,7 @@ class Parser(object):
         self._p = 0
         self.lookahead = [None] * self._k
         for i in range(k):
-            self.consume() # Prime lookahead
+            self.consume()  # Prime lookahead
 
     def consume(self):
         self._p += 1
@@ -46,9 +49,9 @@ class Parser(object):
         for i in range(n):
             self.lookahead.append(self._lexer.next_token())
 
-    ## Look Ahead Token
+    # Look Ahead Token
     def LT(self, i):
-        if i > self._k: 
+        if i > self._k:
             raise Exception("Trying to look further than the buffer can see")
         self.sync(i)
         return self.lookahead[(self._p + i - 1) % self._k]
@@ -58,20 +61,20 @@ class Parser(object):
 
     def peek(self, token_type):
         return self.next().is_a(token_type)
-    
+
     def peek_at(self, i, token_type):
-        return self.LT(i).is_a(token_type)    
+        return self.LT(i).is_a(token_type)
 
     def unexpected_token(self, token_type):
         message = ('\nError: Expecting <%s> but found <%s>\n')
-        message = message % ( token_type.__name__, self.next().type())
+        message = message % (token_type.__name__, self.next().type())
         raise UnexpectedTokenException(message)
 
     def match(self, token_type):
         if self.next().is_a(token_type):
             self.consume()
         else:
-           self.unexpected_token(token_type)
+            self.unexpected_token(token_type)
 
     def match_all(self, *args):
         for arg in args:
